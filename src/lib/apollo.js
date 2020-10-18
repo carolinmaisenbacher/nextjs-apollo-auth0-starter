@@ -154,7 +154,7 @@ function createApolloClient(initialState = null, { getToken }) {
     credentials: 'same-origin',
     fetch,
     fetchOptions,
-    uri: `${process.env.API_BASE_URL}/v1/management`
+    uri: `${process.env.API_URL}`
   });
 
   const authLink = setContext(async (request, { headers }) => {
@@ -170,12 +170,7 @@ function createApolloClient(initialState = null, { getToken }) {
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   const cache = new InMemoryCache({
     fragmentMatcher,
-    cacheRedirects: {
-      Query: {
-        asset: (_, args, { getCacheKey }) =>
-          getCacheKey({ __typename: 'Asset', id: args.id })
-      }
-    }
+    cacheRedirects: {}
   }).restore(initialState ? initialState : {});
 
   const client = new ApolloClient({

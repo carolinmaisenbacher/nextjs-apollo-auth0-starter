@@ -15,7 +15,7 @@ export default function checkLoggedIn(apolloClient) {
     .then(({ data }) => {
       return { user: data.me };
     })
-    .catch((error) => {
+    .catch(() => {
       // Fail gracefully
       return { user: {} };
     });
